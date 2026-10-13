@@ -1,0 +1,69 @@
+name: Security finding
+description: A vulnerability or misconfiguration to fix within its severity's fix time
+title: "security: <system> — <short description>"
+labels: ["security"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **No PHI, credentials or customer names in this issue** — not in the
+        description, not in a pasted log, not redacted. Link to where the
+        detail lives; say "the pilot customer" if one is involved.
+
+        Dependabot alerts are their own record; open an issue for one only to
+        request an exception. File in the repository that holds the fix.
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: The advisory's rating unless the Security Official changed it; if so, say why in Notes.
+      options:
+        - Critical
+        - High
+        - Medium
+        - Low
+    validations: {required: true}
+  - type: dropdown
+    id: source
+    attributes:
+      label: Source
+      options:
+        - Dependabot
+        - Container scan
+        - Drata
+        - Security Command Center
+        - Pen test
+        - Report (security@ or a vendor advisory)
+        - Other
+    validations: {required: true}
+  - type: input
+    id: system
+    attributes:
+      label: Affected system
+      description: Product, service, repository or device. No hostnames with project IDs.
+      placeholder: "intake backend"
+    validations: {required: true}
+  - type: input
+    id: fix_by
+    attributes:
+      label: Fix-by date
+      description: |
+        YYYY-MM-DD, counted from when we learned of it. Critical 7 days, High
+        30, Medium 90, Low 180. Fixed means running in production, or released
+        for desktop clients and on-premises products.
+      placeholder: "2026-11-11"
+    validations: {required: true}
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Link to the alert or report, exposure, rating changes and their reason.
+  - type: markdown
+    attributes:
+      value: |
+        **Closing:** say which — fixed (link the PR and release), not affected
+        (why), or exception. **An exception** is a comment from the owner with
+        the compensating control and `Expires: YYYY-MM-DD`, no more than 90 days out,
+        approved in a comment by the Security Official (the CEO if the owner is
+        the Security Official); then add the `exception` label and leave the
+        issue open. Agents never request, approve or close an exception.
